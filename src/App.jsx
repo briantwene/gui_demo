@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
+import "./index.css";
 
 function App() {
   const [temp, setTemp] = useState(0);
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
 
   const getTemp = () => {
     // check to see if geolocation api can be accessed
@@ -13,11 +11,12 @@ function App() {
       console.log("geolocation API is either turned off or not supported");
     } else {
       navigator.geolocation.getCurrentPosition((position) => {
-        fetchData(position);
+        fetchWeatherData(position);
       });
     }
   };
 
+  // format date function
   const getFormattedDate = (date) => {
     return (
       date.getFullYear() +
@@ -28,8 +27,7 @@ function App() {
     );
   };
 
-  const fetchData = async (position) => {
-    console.log(latitude, longitude);
+  const fetchWeatherData = async (position) => {
     const date = new Date();
     const data = await fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${
@@ -44,18 +42,17 @@ function App() {
     setTemp(data.hourly.temperature_2m[date.getHours()]);
   };
 
-  // getting the current position
   useEffect(() => {
     getTemp();
   }, []);
 
-  console.log(temp);
+  //using JSX to display temperature
   return (
     <div className="App">
       <h1>React Demo</h1>
 
-      <div>Current Temperature</div>
-      <div>{temp}&deg;C</div>
+      <div className="text">Current Temperature</div>
+      <div className="temp">{temp}&deg;C</div>
     </div>
   );
 }
