@@ -18,8 +18,9 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                sh 'npm run build'
-                sh 'npm preview' 
+               sh './scripts/deploy.sh' 
+                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+                sh './scripts/kill.sh' 
             }
         }
     }

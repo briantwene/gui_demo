@@ -9,7 +9,7 @@ set +x
 echo 'start the release build'
 
 set -x
-npm start &
+npm run preview &
 sleep 1
 echo $! > .pidfile
 set +x
