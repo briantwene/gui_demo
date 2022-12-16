@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-            
+                sh 'chmod +x ./scripts/*'
                 sh './scripts/deploy.sh' 
                 input message: 'Finished using the web site? (Click "Proceed" to continue)' 
                 sh './scripts/kill.sh' 
